@@ -16,7 +16,7 @@ import java.util.List;
 
 @Service
 public class OmbdService {
-    private final tools.jackson.databind.ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
     @Value("${omdb.api.key}")
     private String apiKey;
 
@@ -25,7 +25,7 @@ public class OmbdService {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public OmbdService(tools.jackson.databind.ObjectMapper objectMapper) {
+    public OmbdService(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 

@@ -1,5 +1,4 @@
 package com.watchlist.film_watchlist.storage;
-
 import com.watchlist.film_watchlist.model.WatchListItem;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -8,6 +7,8 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@Component
+@Scope("application")
 public class AppStorage {
 
     private final Map<String, WatchListItem> watchlist = new LinkedHashMap<>();
@@ -22,6 +23,12 @@ public class AppStorage {
 
     public Collection<WatchListItem> getAllItems() {
         return watchlist.values();
+    }
+
+    public void updateItem(WatchListItem item) {
+        if (watchlist.containsKey(item.getId())) {
+            watchlist.put(item.getId(), item);
+        }
     }
 
     public void deleteItem(String id) {
