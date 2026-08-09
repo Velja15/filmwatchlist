@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="sr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Watchlist - Početna</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a th:href="@{/}" class="logo">🎬 FilmWatchlist</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Početna</a></li>
+        <li><a th:href="@{/search}">Pretraga</a></li>
+        <li><a th:href="@{/watchlist}">Moja lista</a></li>
+        <li><a th:href="@{/statistics}">Statistika</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <div class="hero">
+        <h1>Dobrodošli u Film Watchlist</h1>
+        <p>Pratite filmove koje želite da gledate, ocenjujte ih i pišite recenzije.</p>
+
+        <div class="hero-stats">
+            <span>Trenutno imate <strong th:text="${totalFilms}">0</strong> filmova na listi</span>
+        </div>
+
+        <div>
+            <a th:href="@{/search}" class="btn">Pretraži filmove</a>
+            <a th:href="@{/watchlist}" class="btn btn-secondary">Pogledaj moju listu</a>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">🔍</div>
+            <div class="stat-label">Pretraži filmove preko OMDB baze</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">📝</div>
+            <div class="stat-label">Dodaj status, ocenu i recenziju</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value">📊</div>
+            <div class="stat-label">Prati statistiku gledanja</div>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>Film Watchlist &copy; 2026 | Spring Boot MVC Projekat</p>
+</footer>
+
+</body>
+</html>
