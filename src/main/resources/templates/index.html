@@ -9,7 +9,7 @@
 <body>
 
 <nav class="navbar">
-    <a th:href="@{/}" class="logo">🎬 FilmWatchlist</a>
+    <a th:href="@{/}" class="logo"><img th:src="@{/images/film.png}" alt="Logo" style="height: 28px; vertical-align: middle;"> FilmWatchlist</a>
     <ul class="nav-links">
         <li><a th:href="@{/}">Početna</a></li>
         <li><a th:href="@{/search}">Pretraga</a></li>
@@ -35,15 +35,21 @@
 
     <div class="stats-grid">
         <div class="stat-card">
-            <div class="stat-value">🔍</div>
+            <div class="stat-value">
+                <img th:src="@{/images/search.png}" alt="Pretraga" style="height: 48px;">
+            </div>
             <div class="stat-label">Pretraži filmove preko OMDB baze</div>
         </div>
         <div class="stat-card">
-            <div class="stat-value">📝</div>
+            <div class="stat-value">
+                <img th:src="@{/images/doc.png}" alt="Pretraga" style="height: 48px;">
+            </div>
             <div class="stat-label">Dodaj status, ocenu i recenziju</div>
         </div>
         <div class="stat-card">
-            <div class="stat-value">📊</div>
+            <div class="stat-value">
+                <img th:src="@{/images/chart.png}" alt="Pretraga" style="height: 48px;">
+            </div>
             <div class="stat-label">Prati statistiku gledanja</div>
         </div>
     </div>
