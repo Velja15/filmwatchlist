@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="sr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Watchlist - Detalji filma</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a th:href="@{/}" class="logo">🎬 FilmWatchlist</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Početna</a></li>
+        <li><a th:href="@{/search}">Pretraga</a></li>
+        <li><a th:href="@{/watchlist}">Moja lista</a></li>
+        <li><a th:href="@{/statistics}">Statistika</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+
+    <a th:href="@{/watchlist}" class="btn btn-secondary btn-small">← Nazad na listu</a>
+
+    <div class="detail-container">
+        <div class="detail-poster">
+            <img th:src="${item.film.poster != null and item.film.poster != 'N/A'} ? ${item.film.poster} : 'https://via.placeholder.com/300x450?text=Nema+Postera'"
+                 th:alt="${item.film.title}">
+        </div>
+
+        <div class="detail-info">
+            <h1 th:text="${item.film.title}">Naziv filma</h1>
+
+            <span th:switch="${item.status.name()}">
+                <span th:case="'PLANIRAM'" class="badge badge-planiram" th:text="${item.status.displayName}"></span>
+                <span th:case="'GLEDAM'" class="badge badge-gledam" th:text="${item.status.displayName}"></span>
+                <span th:case="'POGLEDANO'" class="badge badge-pogledano" th:text="${item.status.displayName}"></span>
+            </span>
+
+            <p style="margin-top: 15px;"><span class="label">Godina:</span> <span th:text="${item.film.year}">-</span></p>
+            <p><span class="label">Žanr:</span> <span th:text="${item.film.genre != null and item.film.genre != '' ? item.film.genre : 'N/A'}">-</span></p>
+            <p><span class="label">Režiser:</span> <span th:text="${item.film.director != null and item.film.director != '' ? item.film.director : 'N/A'}">-</span></p>
+            <p><span class="label">Trajanje:</span> <span th:text="${item.film.runtime != null and item.film.runtime != '' ? item.film.runtime : 'N/A'}">-</span></p>
+            <p><span class="label">IMDb ocena:</span> <span th:text="${item.film.imdbRating != null and item.film.imdbRating != '' ? item.film.imdbRating : 'N/A'}">-</span></p>
+            <p><span class="label">Radnja:</span> <span th:text="${item.film.plot != null and item.film.plot != '' ? item.film.plot : 'N/A'}">-</span></p>
+            <p><span class="label">Dodato:</span> <span th:text="${item.dateAdded}">-</span></p>
+
+            <div th:if="${item.hasReview()}" class="review-box">
+                <div class="rating">⭐ <span th:text="${item.review.rating}">0</span>/10</div>
+                <p th:text="${item.review.reviewText}">Tekst recenzije</p>
+                <p style="color: #888; font-size: 13px; margin-top: 10px;">
+                    Napisano: <span th:text="${item.review.dateWritten}">-</span>
+                </p>
+            </div>
+
+            <div th:unless="${item.hasReview()}" style="margin-top: 20px; color: #888;">
+                <p>Još nema recenzije za ovaj film.</p>
+            </div>
+
+            <div class="detail-actions">
+                <a th:href="@{/watchlist/edit/{id}(id=${item.id})}" class="btn btn-small">Izmeni status</a>
+                <a th:href="@{/watchlist/review/{id}(id=${item.id})}" class="btn btn-small btn-secondary">
+                    <span th:text="${item.hasReview()} ? 'Izmeni recenziju' : 'Dodaj recenziju'">Recenzija</span>
+                </a>
+                <form th:action="@{/watchlist/delete/{id}(id=${item.id})}" method="post"
+                      onsubmit="return confirm('Da li ste sigurni?');">
+                    <button type="submit" class="btn btn-small btn-danger">Obriši film</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <p>Film Watchlist &copy; 2026 | Spring Boot Projekat</p>
+</footer>
+
+</body>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="sr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Watchlist - Statistika</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a th:href="@{/}" class="logo">🎬 FilmWatchlist</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Početna</a></li>
+        <li><a th:href="@{/search}">Pretraga</a></li>
+        <li><a th:href="@{/watchlist}">Moja lista</a></li>
+        <li><a th:href="@{/statistics}">Statistika</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h1>Statistika gledanja</h1>
+
+    <div th:unless="${stats.hasData()}" class="empty-state">
+        <p>Još nema podataka za statistiku.</p>
+        <a th:href="@{/search}" class="btn">Dodaj prvi film</a>
+    </div>
+
+    <div th:if="${stats.hasData()}">
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" th:text="${stats.totalFilms}">0</div>
+                <div class="stat-label">Ukupno filmova</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" th:text="${stats.totalWatched}">0</div>
+                <div class="stat-label">Pogledano</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" th:text="${stats.getFormattedAverageRating()}">0</div>
+                <div class="stat-label">Prosečna ocena</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="font-size: 24px;" th:text="${stats.mostCommonGenre}">N/A</div>
+                <div class="stat-label">Najzastupljeniji žanr</div>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 50px;">Pregled po statusu</h2>
+        <div class="stats-grid">
+            <div class="stat-card" style="border-top-color: #f5a623;">
+                <div class="stat-value" style="color: #f5a623;" th:text="${stats.totalPlanned}">0</div>
+                <div class="stat-label">Planiram da gledam</div>
+            </div>
+            <div class="stat-card" style="border-top-color: #4a90d9;">
+                <div class="stat-value" style="color: #4a90d9;" th:text="${stats.totalWatching}">0</div>
+                <div class="stat-label">Trenutno gledam</div>
+            </div>
+            <div class="stat-card" style="border-top-color: #2ecc71;">
+                <div class="stat-value" style="color: #2ecc71;" th:text="${stats.totalWatched}">0</div>
+                <div class="stat-label">Pogledano</div>
+            </div>
+        </div>
+
+        <div th:if="${stats.genreCount != null and !stats.genreCount.isEmpty()}">
+            <h2 style="margin-top: 50px;">Raspodela žanrova</h2>
+            <table class="watchlist-table">
+                <thead>
+                <tr>
+                    <th>Žanr</th>
+                    <th>Broj filmova</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="entry : ${stats.genreCount}">
+                    <td th:text="${entry.key}">Žanr</td>
+                    <td th:text="${entry.value}">0</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+<footer class="footer">
+    <p>Film Watchlist &copy; 2025 | Spring Boot MVC Projekat</p>
+</footer>
+
+</body>
+</html>

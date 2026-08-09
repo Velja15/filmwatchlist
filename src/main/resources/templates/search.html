@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="sr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Watchlist - Pretraga</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a th:href="@{/}" class="logo">🎬 FilmWatchlist</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Početna</a></li>
+        <li><a th:href="@{/search}">Pretraga</a></li>
+        <li><a th:href="@{/watchlist}">Moja lista</a></li>
+        <li><a th:href="@{/statistics}">Statistika</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h1>Pretraga filmova</h1>
+
+    <div th:if="${successMessage}" class="message message-success">
+        <span th:text="${successMessage}"></span>
+    </div>
+    <div th:if="${errorMessage}" class="message message-error">
+        <span th:text="${errorMessage}"></span>
+    </div>
+    <div th:if="${message}" class="message message-info">
+        <span th:text="${message}"></span>
+    </div>
+
+    <form th:action="@{/search}" method="post" class="search-form">
+        <input type="text" name="query" placeholder="Unesite naziv filma..."
+               th:value="${query}" required>
+        <button type="submit" class="btn">Pretraži</button>
+    </form>
+
+    <div th:if="${results != null and !results.isEmpty()}">
+        <h2>Rezultati pretrage</h2>
+        <div class="film-grid">
+            <div th:each="film : ${results}" class="film-card">
+                <img th:src="${film.poster != null and film.poster != 'N/A'} ? ${film.poster} : 'https://via.placeholder.com/220x320?text=Nema+Postera'"
+                     th:alt="${film.title}">
+                <div class="film-card-body">
+                    <h3 th:text="${film.title}">Naziv filma</h3>
+                    <p class="year" th:text="${film.year}">Godina</p>
+
+                    <form th:action="@{/search/add}" method="post">
+                        <input type="hidden" name="imdbId" th:value="${film.imdbID}">
+                        <select name="status">
+                            <option th:each="s : ${statuses}"
+                                    th:value="${s}"
+                                    th:text="${s.displayName}">Status</option>
+                        </select>
+                        <button type="submit" class="btn btn-small">+ Dodaj na listu</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <p>Film Watchlist &copy; 2026 | Spring Boot Projekat</p>
+</footer>
+
+</body>
+</html>

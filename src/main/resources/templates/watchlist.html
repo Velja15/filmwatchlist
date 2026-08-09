@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="sr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Watchlist - Moja lista</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<nav class="navbar">
+    <a th:href="@{/}" class="logo">🎬 FilmWatchlist</a>
+    <ul class="nav-links">
+        <li><a th:href="@{/}">Početna</a></li>
+        <li><a th:href="@{/search}">Pretraga</a></li>
+        <li><a th:href="@{/watchlist}">Moja lista</a></li>
+        <li><a th:href="@{/statistics}">Statistika</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h1>Moja watchlista</h1>
+
+    <div th:if="${items == null or items.isEmpty()}" class="empty-state">
+        <p>Vaša watchlista je prazna.</p>
+        <a th:href="@{/search}" class="btn">Pretraži filmove</a>
+    </div>
+
+    <div th:if="${items != null and !items.isEmpty()}" class="film-grid">
+        <div th:each="item : ${items}" class="film-card">
+            <img th:src="${item.film.poster != null and item.film.poster != 'N/A'} ? ${item.film.poster} : 'https://via.placeholder.com/220x320?text=Nema+Postera'"
+                 th:alt="${item.film.title}">
+            <div class="film-card-body">
+                <span th:switch="${item.status.name()}">
+                    <span th:case="'PLANIRAM'" class="badge badge-planiram" th:text="${item.status.displayName}"></span>
+                    <span th:case="'GLEDAM'" class="badge badge-gledam" th:text="${item.status.displayName}"></span>
+                    <span th:case="'POGLEDANO'" class="badge badge-pogledano" th:text="${item.status.displayName}"></span>
+                </span>
+
+                <h3 th:text="${item.film.title}">Naziv filma</h3>
+                <p class="year" th:text="${item.film.year}">Godina</p>
+
+                <p th:if="${item.hasReview()}" style="color: #f5a623; margin-bottom: 10px;">
+                    ⭐ <span th:text="${item.review.rating}">0</span>/10
+                </p>
+
+                <div style="margin-top: auto; display: flex; flex-direction: column; gap: 8px;">
+                    <a th:href="@{/watchlist/detail/{id}(id=${item.id})}" class="btn btn-small">Detalji</a>
+                    <a th:href="@{/watchlist/edit/{id}(id=${item.id})}" class="btn btn-small btn-secondary">Izmeni status</a>
+                    <a th:href="@{/watchlist/review/{id}(id=${item.id})}" class="btn btn-small btn-secondary">Recenzija</a>
+
+                    <form th:action="@{/watchlist/delete/{id}(id=${item.id})}" method="post"
+                          onsubmit="return confirm('Da li ste sigurni da želite da obrišete ovaj film?');">
+                        <button type="submit" class="btn btn-small btn-danger" style="width: 100%;">Obriši</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <p>Film Watchlist &copy; 2026 | Spring Boot Projekat</p>
+</footer>
+
+</body>
+</html>
