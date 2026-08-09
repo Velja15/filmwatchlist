@@ -28,7 +28,7 @@
 
     <div th:if="${items != null and !items.isEmpty()}" class="film-grid">
         <div th:each="item : ${items}" class="film-card">
-            <img th:src="${item.film.poster != null and item.film.poster != 'N/A'} ? ${item.film.poster} : 'https://via.placeholder.com/220x320?text=Nema+Postera'"
+            <img th:src="${item.film.poster != null and item.film.poster != 'N/A'} ? ${item.film.poster} : '/images/placeholder.svg'"
                  th:alt="${item.film.title}">
             <div class="film-card-body">
                 <span th:switch="${item.status.name()}">

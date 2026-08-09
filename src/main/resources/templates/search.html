@@ -41,7 +41,7 @@
         <h2>Rezultati pretrage</h2>
         <div class="film-grid">
             <div th:each="film : ${results}" class="film-card">
-                <img th:src="${film.poster != null and film.poster != 'N/A'} ? ${film.poster} : 'https://via.placeholder.com/220x320?text=Nema+Postera'"
+                <img th:src="${film.poster != null and film.poster != 'N/A'} ? ${film.poster} : '/images/placeholder.svg'"
                      th:alt="${film.title}">
                 <div class="film-card-body">
                     <h3 th:text="${film.title}">Naziv filma</h3>

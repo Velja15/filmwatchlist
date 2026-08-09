@@ -24,7 +24,7 @@
 
     <div class="detail-container">
         <div class="detail-poster">
-            <img th:src="${item.film.poster != null and item.film.poster != 'N/A'} ? ${item.film.poster} : 'https://via.placeholder.com/300x450?text=Nema+Postera'"
+            <img th:src="${item.film.poster != null and item.film.poster != 'N/A'} ? ${item.film.poster} : '/images/placeholder.svg'"
                  th:alt="${item.film.title}">
         </div>
 
