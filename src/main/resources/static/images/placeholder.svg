@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450">
+    <rect width="300" height="450" fill="#333333"/>
+    <text x="150" y="210" font-family="sans-serif" font-size="48" fill="#666666" text-anchor="middle">X</text>
+    <text x="150" y="260" font-family="sans-serif" font-size="20" fill="#888888" text-anchor="middle">Nema postera</text>
+</svg>
